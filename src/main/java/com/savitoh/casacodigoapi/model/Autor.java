@@ -1,6 +1,5 @@
 package com.savitoh.casacodigoapi.model;
 
-import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -9,16 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
-@Table(name = "autor")
+@Table
 @SequenceGenerator(name = "autor_seq", sequenceName = "autor_autor_id_seq", allocationSize = 1)
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class Autor implements Serializable {
 
     @Id
@@ -26,36 +19,67 @@ public class Autor implements Serializable {
     @Column(name = "autor_id")
     private Integer autorId;
 
-    @Column(name = "nome", length = 50, nullable = false)
+    @Column(length = 50, nullable = false)
     @NotBlank
     @Size(max = 50)
     private String nome;
 
-    @Column(name = "descricao", length = 400, nullable = false)
+    @Column(length = 400, nullable = false)
     @NotBlank
     @Size(max = 400)
     private String descricao;
 
-    @Column(name = "email", length = 256, nullable = false)
+    @Column(length = 256, nullable = false)
     @NotBlank
     @Size(max = 256)
     @Email
-    private String emaill;
+    private String email;
 
     @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Autor autor = (Autor) o;
-        return Objects.equals(autorId, autor.autorId);
+    public Autor() {
+
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(autorId);
+    public Autor(@NotBlank @Size(max = 50) String nome,
+                 @NotBlank @Size(max = 400) String descricao,
+                 @NotBlank @Size(max = 256) @Email String email) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.email = email;
+    }
+
+    public Integer getAutorId() {
+        return autorId;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

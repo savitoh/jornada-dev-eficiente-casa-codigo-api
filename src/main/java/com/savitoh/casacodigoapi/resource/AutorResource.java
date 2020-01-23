@@ -1,9 +1,8 @@
 package com.savitoh.casacodigoapi.resource;
 
 import com.savitoh.casacodigoapi.dto.AutorDto;
-import com.savitoh.casacodigoapi.mapper.AutorMapper;
 import com.savitoh.casacodigoapi.model.Autor;
-import com.savitoh.casacodigoapi.service.AutorService;
+import com.savitoh.casacodigoapi.repository.AutorRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,16 +16,16 @@ import javax.validation.Valid;
 @RequestMapping("/v1/autor")
 public class AutorResource {
 
-    private final AutorService autorService;
+    private final AutorRepository autorRepository;
 
-    public AutorResource(AutorService autorService) {
-        this.autorService = autorService;
+    public AutorResource(AutorRepository autorRepository) {
+        this.autorRepository = autorRepository;
     }
 
     @PostMapping
     public ResponseEntity<AutorDto> criaAutor(@Valid @RequestBody AutorDto autorDto) {
-        Autor autor = AutorMapper.dtoToEntity(autorDto);
-        Autor autorSaved = autorService.save(autor);
-        return new ResponseEntity<>(AutorMapper.entityToDto(autorSaved), HttpStatus.CREATED);
+        Autor autor = autorDto.transformaParaEntity();
+        Autor autorSalvo = autorRepository.save(autor);
+        return new ResponseEntity<>(autorDto.transformaEntityParaDto(autorSalvo), HttpStatus.CREATED);
     }
 }
