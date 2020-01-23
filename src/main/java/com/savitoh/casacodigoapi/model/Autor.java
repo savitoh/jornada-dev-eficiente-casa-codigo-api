@@ -6,13 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table
 @SequenceGenerator(name = "autor_seq", sequenceName = "autor_autor_id_seq", allocationSize = 1)
-public class Autor implements Serializable {
+public class Autor  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "autor_seq")

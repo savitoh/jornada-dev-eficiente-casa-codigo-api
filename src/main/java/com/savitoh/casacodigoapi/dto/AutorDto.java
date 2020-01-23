@@ -7,12 +7,11 @@ import com.savitoh.casacodigoapi.model.Autor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 
-public class AutorDto implements Serializable {
+public class AutorDto {
 
 
     @NotBlank
