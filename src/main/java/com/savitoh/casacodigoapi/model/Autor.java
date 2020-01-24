@@ -28,7 +28,7 @@ public class Autor  {
     @Size(max = 400)
     private String descricao;
 
-    @Column(length = 256, nullable = false)
+    @Column(length = 256, nullable = false, unique = true)
     @NotBlank
     @Size(max = 256)
     @Email
@@ -38,9 +38,6 @@ public class Autor  {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
-    public Autor() {
-
-    }
 
     public Autor(@NotBlank @Size(max = 50) String nome,
                  @NotBlank @Size(max = 400) String descricao,
@@ -48,6 +45,7 @@ public class Autor  {
         this.nome = nome;
         this.descricao = descricao;
         this.email = email;
+        this.createdAt = LocalDateTime.now();
     }
 
     public Integer getAutorId() {

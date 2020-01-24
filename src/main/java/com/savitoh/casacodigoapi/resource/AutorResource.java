@@ -1,8 +1,10 @@
 package com.savitoh.casacodigoapi.resource;
 
-import com.savitoh.casacodigoapi.dto.AutorDto;
 import com.savitoh.casacodigoapi.model.Autor;
+import com.savitoh.casacodigoapi.payload.AutorRequest;
+import com.savitoh.casacodigoapi.payload.AutorResponse;
 import com.savitoh.casacodigoapi.repository.AutorRepository;
+import com.savitoh.casacodigoapi.validator.AutorCustomValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,14 +20,18 @@ public class AutorResource {
 
     private final AutorRepository autorRepository;
 
-    public AutorResource(AutorRepository autorRepository) {
+    private final AutorCustomValidator autorCustomValidator;
+
+    public AutorResource(AutorRepository autorRepository, AutorCustomValidator autorCustomValidator) {
         this.autorRepository = autorRepository;
+        this.autorCustomValidator = autorCustomValidator;
     }
 
     @PostMapping
-    public ResponseEntity<AutorDto> criaAutor(@Valid @RequestBody AutorDto autorDto) {
-        Autor autor = autorDto.transformaParaEntity();
+    public ResponseEntity<AutorResponse> criaAutor(@Valid @RequestBody AutorRequest autorRequest) {
+        Autor autor = autorRequest.transformaParaEntity();
+        autorCustomValidator.validate(autor);
         Autor autorSalvo = autorRepository.save(autor);
-        return new ResponseEntity<>(autorDto.transformaEntityParaDto(autorSalvo), HttpStatus.CREATED);
+        return new ResponseEntity<>(AutorResponse.transformaEntityParaDto(autorSalvo), HttpStatus.CREATED);
     }
 }
