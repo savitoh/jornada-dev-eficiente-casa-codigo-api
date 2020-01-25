@@ -4,7 +4,7 @@ import com.savitoh.casacodigoapi.model.Autor;
 import com.savitoh.casacodigoapi.payload.NovoAutorRequest;
 import com.savitoh.casacodigoapi.payload.NovoAutorResponse;
 import com.savitoh.casacodigoapi.repository.AutorRepository;
-import com.savitoh.casacodigoapi.validator.AutorEmailUnicoValidator;
+import com.savitoh.casacodigoapi.validator.NovoAutorRequestEmailUnicoValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,7 +24,7 @@ public class AutorResource {
 
     @InitBinder("novoAutorRequest")
     public void init(WebDataBinder dataBinder) {
-        dataBinder.addValidators(new AutorEmailUnicoValidator(autorRepository));
+        dataBinder.addValidators(new NovoAutorRequestEmailUnicoValidator(autorRepository));
     }
 
     @PostMapping
