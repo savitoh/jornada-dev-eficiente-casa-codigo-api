@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 
-public class AutorRequest {
+public class NovoAutorRequest {
 
 
     @NotBlank
@@ -24,9 +24,9 @@ public class AutorRequest {
     private String email;
 
 
-    public AutorRequest(@NotBlank @Size(max = 50) String nome,
-                        @NotBlank @Size(max = 400) String descricao,
-                        @Size(max = 256) @Email @NotBlank String email) {
+    public NovoAutorRequest(@NotBlank @Size(max = 50) String nome,
+                            @NotBlank @Size(max = 400) String descricao,
+                            @Size(max = 256) @Email @NotBlank String email) {
         this.nome = nome;
         this.descricao = descricao;
         this.email = email;
@@ -36,5 +36,7 @@ public class AutorRequest {
         return new Autor(this.nome, this.descricao, this.email);
     }
 
-
+    public String getEmail() {
+        return email;
+    }
 }

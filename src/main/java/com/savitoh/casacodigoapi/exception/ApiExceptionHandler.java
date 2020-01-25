@@ -1,6 +1,5 @@
 package com.savitoh.casacodigoapi.exception;
 
-import com.savitoh.casacodigoapi.exception.data.ApiRequestException;
 import com.savitoh.casacodigoapi.exception.response.ErrorResponse;
 import com.savitoh.casacodigoapi.exception.response.ObjectError;
 import org.springframework.core.Ordered;
@@ -9,8 +8,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -37,9 +34,4 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, status);
     }
 
-    @ExceptionHandler(ApiRequestException.class)
-    public ResponseEntity<ErrorResponse> handlerApiRequestException(ApiRequestException apiRequestException) {
-        ErrorResponse errorResponse = new ErrorResponse(apiRequestException.getMessage(), HttpStatus.BAD_REQUEST.value());
-        return ResponseEntity.badRequest().body(errorResponse);
-    }
 }
