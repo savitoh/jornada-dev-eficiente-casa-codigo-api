@@ -1,10 +1,10 @@
 package com.savitoh.casacodigoapi.payload;
 
 import com.savitoh.casacodigoapi.model.Categoria;
+import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 public class NovaCategoriaResponse {
 
@@ -17,9 +17,7 @@ public class NovaCategoriaResponse {
     }
 
     public static NovaCategoriaResponse transformaEntityParaDto(Categoria categoria) {
-        if(Objects.isNull(categoria)) {
-            throw new IllegalArgumentException("Argumento não pode ser nulo");
-        }
+        Assert.notNull(categoria, "Categoria não pode ser nula");
         return new NovaCategoriaResponse(categoria);
     }
 
