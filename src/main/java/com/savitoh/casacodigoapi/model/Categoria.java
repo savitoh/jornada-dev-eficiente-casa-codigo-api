@@ -19,22 +19,11 @@ public class Categoria {
     @NotBlank
     private String nome;
 
-    public Categoria() {
-    }
-
     public Categoria(@Size(max = 50) @NotBlank String nome) {
         this.nome = nome;
     }
 
-    public Integer getCategoriaId() {
-        return categoriaId;
-    }
-
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 }

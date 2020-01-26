@@ -48,10 +48,6 @@ public class Autor  {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Integer getAutorId() {
-        return autorId;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -64,19 +60,4 @@ public class Autor  {
         return email;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

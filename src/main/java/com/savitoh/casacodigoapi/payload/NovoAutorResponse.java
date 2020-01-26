@@ -1,11 +1,11 @@
 package com.savitoh.casacodigoapi.payload;
 
 import com.savitoh.casacodigoapi.model.Autor;
+import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 public class NovoAutorResponse {
 
@@ -29,9 +29,7 @@ public class NovoAutorResponse {
     }
 
     public static NovoAutorResponse transformaEntityParaDto(Autor autor) {
-        if(Objects.isNull(autor)) {
-            throw new IllegalArgumentException("Argumento não pode ser nulo");
-        }
+        Assert.notNull(autor, "Autor não pode ser nulo");
         return new NovoAutorResponse(autor);
     }
 
