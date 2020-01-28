@@ -1,7 +1,7 @@
 package com.savitoh.casacodigoapi.exception;
 
-import com.savitoh.casacodigoapi.exception.data.ErrorResponse;
-import com.savitoh.casacodigoapi.exception.data.ObjectError;
+import com.savitoh.casacodigoapi.exception.response.ErrorResponse;
+import com.savitoh.casacodigoapi.exception.response.ObjectError;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -14,18 +14,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
-public class ApiExceptionGlobalHandler extends ResponseEntityExceptionHandler {
+public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-        List<ObjectError> errors = getErrors(ex);
+
+        List<ObjectError> errors = ObjectError.criaDeMethodArgumentNotValidException(ex);
         ErrorResponse errorResponse = new ErrorResponse("Erro validacao de campos da requisicao",
                                                         status.value(),
                                                         LocalDateTime.now(),
@@ -34,11 +34,4 @@ public class ApiExceptionGlobalHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, status);
     }
 
-    private List<ObjectError> getErrors(MethodArgumentNotValidException ex) {
-        return ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(fieldError -> new ObjectError(fieldError.getDefaultMessage(), fieldError.getField(), fieldError.getRejectedValue()))
-                .collect(Collectors.toList());
-    }
 }
