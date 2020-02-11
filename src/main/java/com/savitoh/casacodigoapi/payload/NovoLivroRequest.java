@@ -43,6 +43,7 @@ public class NovoLivroRequest {
     @NotNull
     private Integer codigoCategoria;
 
+    @Deprecated
     public NovoLivroRequest() {
     }
 

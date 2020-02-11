@@ -24,6 +24,7 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.PERSIST)
     private List<Livro> livroList = new ArrayList<>();
 
+    @Deprecated
     public Categoria() {
     }
 
@@ -35,15 +36,8 @@ public class Categoria {
         return nome;
     }
 
-    public void setCategoriaId(Integer categoriaId) {
-        this.categoriaId = categoriaId;
+    public Integer getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setLivroList(List<Livro> livroList) {
-        this.livroList = livroList;
-    }
 }

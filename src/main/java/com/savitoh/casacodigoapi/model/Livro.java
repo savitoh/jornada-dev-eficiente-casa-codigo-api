@@ -50,10 +50,14 @@ public class Livro {
     @NotNull
     private LocalDateTime dataLancamento;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "categoria_id")
     @NotNull
     private Categoria categoria;
+
+    @Deprecated
+    public Livro() {
+    }
 
     public Livro(@NotBlank @Size(max = 250) String titulo,
                  @NotBlank @Size(max = 500) String resumo,
