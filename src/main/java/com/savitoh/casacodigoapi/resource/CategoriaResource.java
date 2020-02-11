@@ -1,8 +1,8 @@
 package com.savitoh.casacodigoapi.resource;
 
 import com.savitoh.casacodigoapi.model.Categoria;
+import com.savitoh.casacodigoapi.payload.CategoriaDetalheResponse;
 import com.savitoh.casacodigoapi.payload.NovaCategoriaRequest;
-import com.savitoh.casacodigoapi.payload.NovaCategoriaResponse;
 import com.savitoh.casacodigoapi.repository.CategoriaRepository;
 import com.savitoh.casacodigoapi.validator.NovaCategoriaRequestNomeUnicoValidator;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/categoria")
+@RequestMapping("/v1/categorias")
 public class CategoriaResource {
 
     private final CategoriaRepository categoriaRepository;
@@ -28,10 +28,10 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<NovaCategoriaResponse> criaCategoria
+    public ResponseEntity<CategoriaDetalheResponse> criaCategoria
             (@Valid @RequestBody NovaCategoriaRequest novaCategoriaRequest) {
         Categoria categoria = novaCategoriaRequest.transformaParaEntity();
         Categoria categoriaSalva = categoriaRepository.save(categoria);
-        return new ResponseEntity<>(NovaCategoriaResponse.transformaEntityParaDto(categoriaSalva), HttpStatus.CREATED);
+        return new ResponseEntity<>(CategoriaDetalheResponse.transformaEntityParaDto(categoriaSalva), HttpStatus.CREATED);
     }
 }
