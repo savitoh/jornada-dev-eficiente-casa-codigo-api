@@ -2,7 +2,7 @@ package com.savitoh.casacodigoapi.resource;
 
 import com.savitoh.casacodigoapi.model.Categoria;
 import com.savitoh.casacodigoapi.model.Livro;
-import com.savitoh.casacodigoapi.payload.LivroProjecaoCompactaResponse;
+import com.savitoh.casacodigoapi.payload.LivroDetalheResponse;
 import com.savitoh.casacodigoapi.payload.NovoLivroRequest;
 import com.savitoh.casacodigoapi.payload.NovoLivroResponse;
 import com.savitoh.casacodigoapi.repository.CategoriaRepository;
@@ -16,10 +16,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/livro")
+@RequestMapping("/v1/livros")
 public class LivroResource {
 
     private final LivroRepository livroRepository;
@@ -48,9 +49,19 @@ public class LivroResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<LivroProjecaoCompactaResponse>> obtemTodosLivros() {
-        List<LivroProjecaoCompactaResponse>  livroProjecaoCompactaResponse =
-                livroRepository.obtemTodosLivrosProjetados();
-        return ResponseEntity.ok().body(livroProjecaoCompactaResponse);
+    public ResponseEntity<List<LivroDetalheResponse>> obtemTodosLivros() {
+        List<LivroDetalheResponse> livroDetalheResponses = Collections.emptyList();
+        livroRepository.findAll()
+                .iterator()
+                .forEachRemaining(livro -> livroDetalheResponses.add(LivroDetalheResponse.transformaEntityParaDto(livro)));
+        return ResponseEntity.ok().body(livroDetalheResponses);
+    }
+
+    @GetMapping("/{codigoLivro}")
+    public ResponseEntity<LivroDetalheResponse> obtemLivroPorId(@PathVariable("codigoLivro") Integer codigoLivro) {
+        return livroRepository.findById(codigoLivro).map(livro -> {
+          LivroDetalheResponse livroDetalheResponse = LivroDetalheResponse.transformaEntityParaDto(livro);
+          return  ResponseEntity.ok().body(livroDetalheResponse);
+        }).orElse(ResponseEntity.notFound().build());
     }
 }
