@@ -3,6 +3,8 @@ package com.savitoh.casacodigoapi.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -19,6 +21,13 @@ public class Categoria {
     @NotBlank
     private String nome;
 
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.PERSIST)
+    private List<Livro> livroList = new ArrayList<>();
+
+    @Deprecated
+    public Categoria() {
+    }
+
     public Categoria(@Size(max = 50) @NotBlank String nome) {
         this.nome = nome;
     }
@@ -26,4 +35,9 @@ public class Categoria {
     public String getNome() {
         return nome;
     }
+
+    public Integer getCategoriaId() {
+        return categoriaId;
+    }
+
 }

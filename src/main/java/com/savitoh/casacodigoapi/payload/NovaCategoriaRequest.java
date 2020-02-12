@@ -11,7 +11,12 @@ public class NovaCategoriaRequest {
     @NotBlank
     private String nome;
 
+    @Deprecated
     public NovaCategoriaRequest() {
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {
@@ -20,9 +25,5 @@ public class NovaCategoriaRequest {
 
     public Categoria transformaParaEntity() {
         return new Categoria(this.nome);
-    }
-
-    public String getNome() {
-        return nome;
     }
 }
