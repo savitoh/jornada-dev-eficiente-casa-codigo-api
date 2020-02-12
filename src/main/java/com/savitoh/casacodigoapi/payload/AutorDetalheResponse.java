@@ -7,7 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class NovoAutorResponse {
+public class AutorDetalheResponse {
 
     @NotBlank
     @Size(max = 50)
@@ -22,15 +22,15 @@ public class NovoAutorResponse {
     @NotBlank
     private final String email;
 
-    public NovoAutorResponse(Autor autor) {
+    public AutorDetalheResponse(Autor autor) {
         this.nome = autor.getNome();
         this.descricao = autor.getDescricao();
         this.email = autor.getEmail();
     }
 
-    public static NovoAutorResponse transformaEntityParaDto(Autor autor) {
+    public static AutorDetalheResponse transformaEntityParaDto(Autor autor) {
         Assert.notNull(autor, "Autor não pode ser nulo");
-        return new NovoAutorResponse(autor);
+        return new AutorDetalheResponse(autor);
     }
 
     public String getNome() {
