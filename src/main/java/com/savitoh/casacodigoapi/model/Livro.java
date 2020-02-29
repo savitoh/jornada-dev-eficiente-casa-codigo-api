@@ -55,7 +55,10 @@ public class Livro {
     @NotNull
     private Categoria categoria;
 
-    @Deprecated
+    /**
+     * @deprecated (Usado apenas pelo Hibernate)
+     */
+    @Deprecated(since = "always")
     public Livro() {
     }
 

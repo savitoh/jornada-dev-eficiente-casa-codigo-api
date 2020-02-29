@@ -24,7 +24,10 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.PERSIST)
     private List<Livro> livroList = new ArrayList<>();
 
-    @Deprecated
+    /**
+     * @deprecated Usado apenas pelo Hibernate
+     */
+    @Deprecated(since="always")
     public Categoria() {
     }
 
