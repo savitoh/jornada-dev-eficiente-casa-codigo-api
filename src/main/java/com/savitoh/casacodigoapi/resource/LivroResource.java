@@ -4,7 +4,6 @@ import com.savitoh.casacodigoapi.model.Categoria;
 import com.savitoh.casacodigoapi.model.Livro;
 import com.savitoh.casacodigoapi.payload.LivroDetalheResponse;
 import com.savitoh.casacodigoapi.payload.NovoLivroRequest;
-import com.savitoh.casacodigoapi.payload.NovoLivroResponse;
 import com.savitoh.casacodigoapi.repository.CategoriaRepository;
 import com.savitoh.casacodigoapi.repository.LivroRepository;
 import com.savitoh.casacodigoapi.validator.NovoLivroRequestCodigoCategoriaExisteValidator;
@@ -40,12 +39,12 @@ public class LivroResource {
     }
 
     @PostMapping
-    public ResponseEntity<NovoLivroResponse> criaLivro(@Valid @RequestBody NovoLivroRequest novoLivroRequest) {
+    public ResponseEntity<LivroDetalheResponse> criaLivro(@Valid @RequestBody NovoLivroRequest novoLivroRequest) {
         Categoria categoria = categoriaRepository.findById(novoLivroRequest.getCodigoCategoria()).get();
         Livro livro = novoLivroRequest.transformaParaEntity(categoria);
         Livro livroSalvo = livroRepository.save(livro);
-        NovoLivroResponse novoLivroResponse = new NovoLivroResponse(livroSalvo);
-        return  new ResponseEntity<>(novoLivroResponse, HttpStatus.CREATED);
+        LivroDetalheResponse livroDetalheResponse = LivroDetalheResponse.of(livroSalvo);
+        return  new ResponseEntity<>(livroDetalheResponse, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -53,14 +52,14 @@ public class LivroResource {
         List<LivroDetalheResponse> livroDetalheResponses = Collections.emptyList();
         livroRepository.findAll()
                 .iterator()
-                .forEachRemaining(livro -> livroDetalheResponses.add(LivroDetalheResponse.transformaEntityParaDto(livro)));
+                .forEachRemaining(livro -> livroDetalheResponses.add(LivroDetalheResponse.of(livro)));
         return ResponseEntity.ok().body(livroDetalheResponses);
     }
 
     @GetMapping("/{codigoLivro}")
     public ResponseEntity<LivroDetalheResponse> obtemLivroPorId(@PathVariable("codigoLivro") Integer codigoLivro) {
         return livroRepository.findById(codigoLivro).map(livro -> {
-          LivroDetalheResponse livroDetalheResponse = LivroDetalheResponse.transformaEntityParaDto(livro);
+          LivroDetalheResponse livroDetalheResponse = LivroDetalheResponse.of(livro);
           return  ResponseEntity.ok().body(livroDetalheResponse);
         }).orElse(ResponseEntity.notFound().build());
     }
