@@ -32,6 +32,6 @@ public class CategoriaResource {
             (@Valid @RequestBody NovaCategoriaRequest novaCategoriaRequest) {
         Categoria categoria = novaCategoriaRequest.transformaParaEntity();
         Categoria categoriaSalva = categoriaRepository.save(categoria);
-        return new ResponseEntity<>(CategoriaDetalheResponse.transformaEntityParaDto(categoriaSalva), HttpStatus.CREATED);
+        return new ResponseEntity<>(CategoriaDetalheResponse.of(categoriaSalva), HttpStatus.CREATED);
     }
 }

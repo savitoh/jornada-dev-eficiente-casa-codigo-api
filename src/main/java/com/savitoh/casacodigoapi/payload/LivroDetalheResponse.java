@@ -35,7 +35,7 @@ public class LivroDetalheResponse {
         this.numeroPaginas = numeroPaginas;
         this.isbn = isbn;
         this.dataLancamento = dataLancamento;
-        this.categoriaDetalheResponse = CategoriaDetalheResponse.transformaEntityParaDto(categoria);
+        this.categoriaDetalheResponse = CategoriaDetalheResponse.of(categoria);
     }
 
     public String getTitulo() {
@@ -70,7 +70,7 @@ public class LivroDetalheResponse {
         return categoriaDetalheResponse;
     }
 
-    public static LivroDetalheResponse transformaEntityParaDto(Livro livro) {
+    public static LivroDetalheResponse of(Livro livro) {
         Assert.notNull(livro, "Livro não pode ser nulo");
         return new LivroDetalheResponse(livro.getTitulo(), livro.getResumo(), livro.getSumario(), livro.getPreco(), livro.getNumeroPaginas(), livro.getIsbn(), livro.getDataLancamento(), livro.getCategoria());
     }

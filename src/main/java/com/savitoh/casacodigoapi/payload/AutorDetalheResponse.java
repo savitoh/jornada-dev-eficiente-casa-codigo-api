@@ -28,7 +28,7 @@ public class AutorDetalheResponse {
         this.email = autor.getEmail();
     }
 
-    public static AutorDetalheResponse transformaEntityParaDto(Autor autor) {
+    public static AutorDetalheResponse of(Autor autor) {
         Assert.notNull(autor, "Autor não pode ser nulo");
         return new AutorDetalheResponse(autor);
     }

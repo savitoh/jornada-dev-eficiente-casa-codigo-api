@@ -31,6 +31,6 @@ public class AutorResource {
     public ResponseEntity<AutorDetalheResponse> criaAutor(@Valid @RequestBody NovoAutorRequest novoAutorRequest) {
         Autor autor = novoAutorRequest.transformaParaEntity();
         Autor autorSalvo = autorRepository.save(autor);
-        return new ResponseEntity<>(AutorDetalheResponse.transformaEntityParaDto(autorSalvo), HttpStatus.CREATED);
+        return new ResponseEntity<>(AutorDetalheResponse.of(autorSalvo), HttpStatus.CREATED);
     }
 }

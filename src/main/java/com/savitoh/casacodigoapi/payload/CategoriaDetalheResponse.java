@@ -14,7 +14,7 @@ public class CategoriaDetalheResponse {
         this.nome = nome;
     }
 
-    public static CategoriaDetalheResponse transformaEntityParaDto(Categoria categoria) {
+    public static CategoriaDetalheResponse of(Categoria categoria) {
         Assert.notNull(categoria, "Categoria não pode ser nula");
         return new CategoriaDetalheResponse(categoria.getCategoriaId(), categoria.getNome());
     }
